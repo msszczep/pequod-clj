@@ -1,5 +1,15 @@
 (ns pequod-clj.core)
 
+(def final-goods [])
+(def intermediate-inputs [])
+(def nature-types [])
+(def labor-types [])
+
+(def final-prices [])
+(def input-prices [])
+(def nature-prices [])
+(def labor-prices [])
+
 (def old-final-types [])
 (def old-input-types [])
 (def old-nature-prices [])
@@ -10,25 +20,45 @@
 (def nature-surpluses [])
 (def labor-surpluses [])
 
+(def threshold-met? [])
+(def pdlist [])
+(def price-deltas [])
+(def delta-delay [])
+
 (def lorenz-points [])
 (def gini-index-reserve [])
 
-
 (defn initialize-prices []
-  (let [init-final-price 100 ; these are the values set by default in interface
-        init-intermediate-price 100
-        init-nature-price 150
-        init-labor-price 150
-        finals 4
-        inputs 4
-        resources 1
-        labors 1
-        final-prices (repeat finals init-final-price)
-        input-prices (repeat inputs init-intermediate price)
-        nature-prices (repeat resources init-intermediate price)
-        labor-prices (repeat labors init-labor-price)
-        price-deltas [0.05 0.05 0.05 0.05]
-        pdlist (repeat (+ finals input resources labors) 0.05)]))
+  ; these are the values set by default in interface
+  (def init-final-price 100)
+  (def init-intermediate-price 100)
+  (def init-labor-price 150)
+  (def init-nature-price 150)
+  (def finals 4)
+  (def inputs 4)
+  (def resources 1)
+  (def labors 1)
+  (def final-prices (repeat finals init-final-price))
+  (def input-prices (repeat inputs init-intermediate-price))
+  (def nature-prices (repeat resources init-nature-price))
+  (def labor-prices (repeat labors init-labor-price))
+  (def price-deltas [0.05 0.05 0.05 0.05])
+  (def pdlist (repeat (+ finals inputs resources labors) 0.05)))
+
+(defn standardize-prices []
+  (def init-final-price 80)
+  (def init-intermediate-price 80)
+  (def init-nature-price 80)
+  (def init-labor-price 80))
+
+(defn randomize-prices []
+  (def init-final-price (+ 40 (rand-nth (range 0 40))))
+  (def init-intermediate-price (+ 40 (rand-nth (range 0 40))))
+  (def init-nature-price (+ 30 (rand-nth (range 0 30))))
+  (def init-labor-price (+ 30 (rand-nth (range 0 30)))))
+
+(defn randomize-councils []
+  (def experiment-number (rand-nth (range 0 99999))))
 
 
 (defn create-ccs [consumer-councils workers-per-council finals]
@@ -61,16 +91,22 @@
          l2 (get-random-subset nature-types)
          l3 (get-random-subset labor-types)
          production-inputs (vector l1 l2 l3)
+         ; input counts: lines 362 and 363
+         xe 0.05
+         c xe
+         input-exponents []
          ])))
 
 
 (defn setup []
   (do 
     (initialize-prices)
-    (let [price-delta 0.1
-          delta-delay 5
-          threshold-met? false
-          final-goods (range 1 (inc finals))
+    ; TODO: Set up random-seed equivalent (l. 288)
+    (def price-delta 0.1)
+    (def delta-delay 5)
+    (def threshold-met? false)
+    (def final-goods (range 1 (inc finals)))
+    (let [
           intermediate-inputs (range 1 (inc inputs))
           nature-types (range 1 (inc resources))
           labor-types (range 1 (inc labors))
@@ -79,10 +115,9 @@
           ]
       (create-wcs worker-councils final-goods 0)
       (create-wcs worker-councils intermediate-inputs 1)
-    )))
+      (map setup-wcs wcs)
+) ))
 
-
-; TODO: confused about input-count in 362 and 363 - help!
 
 ; https://github.com/msszczep/pequod2/blob/master/pequod2.nlogo
 ; http://ccl.northwestern.edu/netlogo/docs/
