@@ -15,11 +15,6 @@
 (def old-nature-prices [])
 (def old-labor-prices [])
 
-(def final-surpluses [])
-(def input-surpluses [])
-(def nature-surpluses [])
-(def labor-surpluses [])
-
 (def threshold-met? [])
 (def pdlist [])
 (def price-deltas [])
@@ -68,9 +63,12 @@
              :effort effort
              :income (* 500 effort workers-per-council)
              :cy (+ 6 (rand 9)) ; scalar for whole product in utility function
+             :cz (/ .5 finals)
+             :utility-exponents (repeat finals )
              :final-demands (repeat 5 0)
              :utility-exponents []
-             :cz (/ .5 finals)})))
+;; PICKUP 4/12: line 338
+})))
 
 
 (defn create-wcs [worker-councils goods industry]
@@ -100,19 +98,22 @@
 
 (defn setup []
   (do 
-    (initialize-prices)
     ; TODO: Set up random-seed equivalent (l. 288)
+    (initialize-prices)
     (def price-delta 0.1)
     (def delta-delay 5)
     (def threshold-met? false)
     (def final-goods (range 1 (inc finals)))
-    (let [
-          intermediate-inputs (range 1 (inc inputs))
-          nature-types (range 1 (inc resources))
-          labor-types (range 1 (inc labors))
-          ccs (create-ccs 100 10 finals)
-          worker-councils 80 ; number of worker councils
-          ]
+    (def intermediate-inputs (range 1 (inc inputs)))
+    (def nature-types (range 1 (inc resources)))
+    (def labor-types (range 1 (inc labors)))
+    (def final-surpluses [])
+    (def input-surpluses [])
+    (def nature-surpluses [])
+    (def labor-surpluses [])
+    (def ccs (create-ccs 100 10 finals))
+    (let [worker-councils 80 ; number of worker councils default in interface
+]
       (create-wcs worker-councils final-goods 0)
       (create-wcs worker-councils intermediate-inputs 1)
       (map setup-wcs wcs)
