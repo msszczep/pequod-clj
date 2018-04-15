@@ -57,18 +57,17 @@
 
 
 (defn create-ccs [consumer-councils workers-per-council finals]
-  (let [effort 1]
+  (let [effort 1
+        cz (/ .5 finals)]
     (repeat consumer-councils 
             {:num-workers workers-per-council
              :effort effort
              :income (* 500 effort workers-per-council)
              :cy (+ 6 (rand 9)) ; scalar for whole product in utility function
-             :cz (/ .5 finals)
-             :utility-exponents (repeat finals )
+             :cz cz
+             :utility-exponents (repeat finals (+ cz (rand cz)))
              :final-demands (repeat 5 0)
-             :utility-exponents []
-;; PICKUP 4/12: line 338
-})))
+             :utility-exponents []})))
 
 
 (defn create-wcs [worker-councils goods industry]
@@ -89,10 +88,28 @@
          l2 (get-random-subset nature-types)
          l3 (get-random-subset labor-types)
          production-inputs (vector l1 l2 l3)
-         ; input counts: lines 362 and 363
+         ; Skipping Lines 362 & 363; hoping improvements in code will make this obsolete
          xe 0.05
          c xe
-         input-exponents []
+         input-exponents (when (> (count (first production-inputs)) 0)
+                           (let [xz (/ .2 (count (first production-inputs)))]
+                             (rest (take (inc (count (first production-inputs)))
+                                         (+ xz (rand xz))))))
+         nature-exponents (let [rz (/ .2 (count (second production-inputs)))]
+                            (rest (take (inc (count (second production-inputs)))
+                                        (+ 0.05 rz (rand rz)))))
+         labor-exponents (let [lz (/ .2 (count (last production-inputs)))]
+                            (rest (take (inc (count (last production-inputs))) 
+                                        (+ 0.05 lz (rand lz)))))
+         cq 7 ; cq-init
+         ce 1 ; ce-init
+         du .25 ; du-init
+         k du
+         s ce ; note: set as S in original Netlogo
+         a cq ; note: set as A in original Netlogo
+         effort .5
+         output 0
+       ; PICKUP 4/14: line 395 - set labor-quantities
          ])))
 
 
@@ -113,7 +130,7 @@
     (def labor-surpluses [])
     (def ccs (create-ccs 100 10 finals))
     (let [worker-councils 80 ; number of worker councils default in interface
-]
+          ]
       (create-wcs worker-councils final-goods 0)
       (create-wcs worker-councils intermediate-inputs 1)
       (map setup-wcs wcs)
