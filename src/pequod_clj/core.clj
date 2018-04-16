@@ -77,6 +77,12 @@
                 {:industry industry
                  :product good}))))
 
+(defn update-lorenz-and-gini [ccs]
+  (let [num-people (count ccs)
+        sorted-wealths (map ccs)
+; PICKUP 4/15: Continue plowing through this.
+        ]))
+
 
 (defn setup-wcs [wc]
   (letfn [(get-random-subset [input-seq]
@@ -109,7 +115,8 @@
          a cq ; note: set as A in original Netlogo
          effort .5
          output 0
-       ; PICKUP 4/14: line 395 - set labor-quantities
+         ; TODO : line 395 - set labor-quantities, EXPLAIN!?
+         (update-lorenz-and-gini ccs)
          ])))
 
 
