@@ -1,4 +1,5 @@
-(ns pequod-clj.core)
+(ns pequod-clj.core
+  (:require [clojure.math.numeric-tower :as math :refer [expt]]))
 
 (def final-goods [])
 (def intermediate-inputs [])
@@ -68,6 +69,7 @@
              :utility-exponents (repeat finals (+ cz (rand cz)))
              :final-demands (repeat 5 0)
              :utility-exponents []})))
+; TODO: Why is utility-exponents defined twice?
 
 
 (defn create-wcs [worker-councils goods industry]
@@ -77,11 +79,25 @@
                 {:industry industry
                  :product good}))))
 
+
+(defn calculate-consumer-utility [cc]
+  (let [final-demands (:final-demands cc)
+        utility-exponents (:utility-exponents cc)])
+    (* cy (reduce * (repeat (count final-goods)
+                            (expt final-demands utility-exponents)))))
+
+
 (defn update-lorenz-and-gini [ccs]
   (let [num-people (count ccs)
-        sorted-wealths (map ccs)
-; PICKUP 4/15: Continue plowing through this.
-        ]))
+        sorted-wealths (map calculate-consumer-utility ccs)
+        total-wealth (reduce + sorted-wealths)]
+      (when (pos? total-wealth)
+          (let [wealth-sum-so-far 0
+                index 0
+                gini-index-reserve 0
+                ])
+)))
+; PICKUP TODO 4/21: Continue to plow
 
 
 (defn setup-wcs [wc]
@@ -115,7 +131,7 @@
          a cq ; note: set as A in original Netlogo
          effort .5
          output 0
-         ; TODO : line 395 - set labor-quantities, EXPLAIN!?
+         labor-quantities [0]
          (update-lorenz-and-gini ccs)
          ])))
 
