@@ -53,31 +53,28 @@
   (def init-nature-price (+ 30 (rand-nth (range 0 30))))
   (def init-labor-price (+ 30 (rand-nth (range 0 30)))))
 
+
 (defn randomize-councils []
   (def experiment-number (rand-nth (range 0 99999))))
 
 
 (defn create-ccs [consumer-councils workers-per-council finals]
   (let [effort 1
-        cz (/ .5 finals)]
-    (repeat consumer-councils 
+        cz (/ 0.5 finals)]
+    (repeat consumer-councils
             {:num-workers workers-per-council
              :effort effort
              :income (* 500 effort workers-per-council)
              :cy (+ 6 (rand 9)) ; scalar for whole product in utility function
-             :cz cz
              :utility-exponents (repeat finals (+ cz (rand cz)))
-             :final-demands (repeat 5 0)
-             :utility-exponents []})))
-; TODO: Why is utility-exponents defined twice?
+             :final-demands (repeat 5 0)})))
 
 
 (defn create-wcs [worker-councils goods industry]
-   (flatten
-     (for [good goods]
-        (repeat (/ worker-councils 2 (count goods))
-                {:industry industry
-                 :product good}))))
+  (->> goods
+       (map #(repeat (/ worker-councils 2 (count goods))
+                     {:industry industry :product %}))
+       flatten))
 
 
 (defn calculate-consumer-utility [cc]
@@ -92,12 +89,13 @@
         sorted-wealths (map calculate-consumer-utility ccs)
         total-wealth (reduce + sorted-wealths)]
       (when (pos? total-wealth)
-          (let [wealth-sum-so-far 0
+          (let [wealth-sum-so-far (reduce + sorted-wealths)
                 index 0
                 gini-index-reserve 0
-                ])
-)))
-; PICKUP TODO 4/21: Continue to plow
+                lorenz-points 
+                ]
+         (conj gini-index-reserve )))))
+; PICKUP TODO 4/22: Resume with gini-index-reserve
 
 
 (defn setup-wcs [wc]
@@ -158,6 +156,18 @@
       (create-wcs worker-councils intermediate-inputs 1)
       (map setup-wcs wcs)
 ) ))
+
+(defn proposal [wc]
+  wc)
+
+(defn consume [cc]
+  cc)
+
+(defn iterate-plan []
+  (map proposal wcs)
+  (map consume ccs)
+
+)
 
 
 ; https://github.com/msszczep/pequod2/blob/master/pequod2.nlogo
