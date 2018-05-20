@@ -86,16 +86,23 @@
 
 (defn update-lorenz-and-gini [ccs]
   (let [num-people (count ccs)
-        sorted-wealths (map calculate-consumer-utility ccs)
+        sorted-wealths (mapv calculate-consumer-utility ccs)
         total-wealth (reduce + sorted-wealths)]
       (when (pos? total-wealth)
-          (let [wealth-sum-so-far (reduce + sorted-wealths)
-                index 0
-                gini-index-reserve 0
-                lorenz-points 
-                ]
-         (conj gini-index-reserve )))))
-; PICKUP TODO 4/22: Resume with gini-index-reserve
+        (loop [wealth-sum-so-far 0
+               index 0
+               gini-index-reserve 0
+               lorenz-points []
+               num-people-counter 0]
+          (if (= num-people num-people-counter)
+            lorenz-points
+            (recur (+ wealth-sum-so-far (get sorted-wealths index))
+                   (inc index)
+                   (+ gini-index-reserve
+                      (/ index num-people)
+                      (- (/ wealth-sum-so-far total-wealth)))
+                   (cons (* (/ wealth-sum-so-far total-wealth) 100) lorenz-points)
+                   (inc num-people-counter)))))))
 
 
 (defn setup-wcs [wc]
@@ -111,7 +118,7 @@
          ; Skipping Lines 362 & 363; hoping improvements in code will make this obsolete
          xe 0.05
          c xe
-         input-exponents (when (> (count (first production-inputs)) 0)
+         input-exponents (when (pos? (count (first production-inputs)))
                            (let [xz (/ .2 (count (first production-inputs)))]
                              (rest (take (inc (count (first production-inputs)))
                                          (+ xz (rand xz))))))
