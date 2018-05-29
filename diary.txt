@@ -1,0 +1,45 @@
+April 1, 2018
+Got back to work.  Took more than an hour, even with code in Clojure, to 
+figure out where I left off and where to go next.  I feel like I've got
+myself reoriented and can pick up.  Next: exponents! 
+
+April 11, 2018
+Don't care about having Pequod conform to functional principles at the moment. 
+I need to build my understanding of the model first.  I can always refactor
+later, and I definitely will.  But I need to wrap my head around the code.
+
+April 14, 2018
+Took my birthday off, and Friday off because it's Friday.  But back to work on
+Saturday: Conversion is continuing well.  Nearly done with the big setup function
+conversion.  Got a couple more things to wrap up.  Hoping to have most of the 
+main undergirding done soon.  Then got to figure out ways to interact with it
+in a clean interface.  Maybe I'll steal an idea from ants.clj?
+
+April 21, 2018
+It's coming easier now.  Continuing with building helper functions and moving along with lorenz-and-gini updates.  I feel like I'm making steady progress.
+
+May 13, 2018
+With the UDC Conference done, I'm back to work on this.  Got a paper notebook to help
+with grokking.  It might be a blessing that I've been away from activism for a while.
+It helps me to see things with new eyes.  I can understand that we need to be involved
+in the day-to-day, especially with such immediate suffering, but no thought it brought
+to vision or how to instantiate it.  That can help reduce the suffering, in spades.  Enough
+writing.  Back to work.
+
+May 20, 2018
+Good day.  Got through the lorenz-and-gini function.  I even made a commit.  I'm moving 
+on to the go function, and particularly to the proposal function, and further still to
+solution1.nls.  Hoo boy.  This looks complicated.  I might want to ask for help, but not
+before I give it a try first.
+
+May 28, 2018
+Spoke with Michael over the phone.  Good call.  Here are the notes from the call.
+
+Lagrangian multiplier method (optimizing a function, finding a max or min; NOT a numerical method)
+ef -> effort component, treated differently
+Effort constraint: S
+Past debate: Use numeric methods?
+Future direction: Use analytical methods?
+Why does it blow up when there are an odd number of terms?
+Search term: Constrained optimization problem
+Clojure core.logic
