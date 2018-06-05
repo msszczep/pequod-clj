@@ -1,0 +1,21 @@
+Hi Mitchell
+
+The question mark operator in netlogo is used when iterating over a list of items. It stands in for the current item in the iteration. The 'foreach' keyword iterates the commands in square brackets for each item in the list that precedes them. In this case, for each of the types of final (consumer) goods in the model (which are represented as a list called 'final-goods') it creates worker councils and assigns their product type to ?, meaning the current item in the list. Looking over the code now, it does seem that there may be an error there, in terms of the number of councils of each type that are created--however, not one that would impact the running of the model, just the effectiveness of the interface widgets used to initialize it. Hopefully this explains the ?
+
+input-count is a worker council reporter, defined in line 448. It reports the total number of inputs to production for that council's production function, which is used in solving for its production proposal.
+
+Sorry for the delayed responses, but very glad to see you still have interest in the project! Let me know if I can answer any other questions or help in any other way.
+
+Thanks
+
+PS. Not sure which version of NetLogo you might be using, but this model was constructed prior to version 6 (that is, with version 5.3.1). Several things changed in version 6 which may require some changes to the model if it is to be compatible with newer versions.
+
+======
+
+Just realized I hadn't answered these questions yet either, so here goes:
+
+1. pdlist is a list variable constructed during each iteration of the simulation procedure--each item of the list is the amount by which the price for a given commodity will be adjusted during that step. the variable 'pp' is used as an iterator over this list during its construction, and each price adjustment is determined by the reporter 'other-price-change' defined near the top of the price-adjustment.nls file. The formula for the price adjustment is the ratio between the current size of the surplus and the average of the current supply and demand for each item, such that it approaches 1.0 as the price approaches the "equilibrium" price. hope this helps
+
+2. the variable delta-delay is used to slow down the adjustment of prices when very large or very small surpluses (or deficits) of a given commodity occur. this is something of a workaround, in response to a problem where very large surpluses would cause overcorrections and send the system into an unstable oscillation of prices. by holding a price constant for a couple (i believe 5) iterations after a large adjustment is made, it gives the rest of the price-system a chance to respond to the large change before another large change is implemented, and has prevented almost all of the unstable oscillation behavior that was occurring prior to this modification. this is a rather ad hoc approach, and may require some fine tuning or additional theory to justify, but pragmatically speaking it has worked pretty well
+
+3. the variable 'cz' is used to apportion the exponents in the cobb-douglas utility function for consumer agents in such a way that the sum of all exponents does not exceed 1.0 (that is, such that the function produces diminishing marginal utility in consumption). it divides the "points" for the various exponents between the various types of final good that are available for consumption, and then randomly assigns an appropriate exponent to each good in the consumer utility function. the way it is constructed the sum of all exponents is always less than 1.0, which is the mathematical condition for diminishing marginal utility in the function. if there was a logic behind the naming of this variable it is lost to the sands of time, so sorry about that :)

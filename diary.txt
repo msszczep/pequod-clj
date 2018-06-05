@@ -43,3 +43,13 @@ Future direction: Use analytical methods?
 Why does it blow up when there are an odd number of terms?
 Search term: Constrained optimization problem
 Clojure core.logic
+
+June 4, 2018
+Notes from call with Robin and Michael:
+1.  It doesn't work.
+2.  It takes a long time.
+pledge not fail at retirement
+July 1st: Return.  Be ready! 
+S: How much do you dislike effort
+k: Diminishing return to more effort
+value of their product (price of product * quantity) - (price of inputs * inputs) - Se^k [effort terms]

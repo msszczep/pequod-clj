@@ -1,0 +1,11 @@
+Graph[{"go"->"iterate-plan", 
+       "go" -> "update-lorenz-and-gini", 
+       "go" -> "check-surpluses",
+       "go" -> "record-prices",
+       "iterate-plan" -> "planning-bureau",
+       "iterate-plan" -> "proposal",
+       "iterate-plan" -> "consume",
+       "setup" -> "initialize-prices",
+       "setup" -> "create-ccs",
+       }, 
+VertexLabels-> "Name"]

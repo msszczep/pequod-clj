@@ -1,0 +1,53 @@
+Dear M&M,
+
+ 
+
+I thought that was a very helpful conversation yesterday.
+
+ 
+
+Mulling things overnight, I think it would make life simpler in the long-run to change how we do the worker council optimization now.
+
+ 
+
+Intellectually, politically, and historically “we” have always talked about consumer councils AND worker councils trying to maximize the utility of their members, where members are treated as a “collective/average” for the council. For capitalist economies it is traditional to model individual consumers as utility maximizers, but firms as profit maximizers. But we always treated firms in a participatory economy as utility maximizers for their collective membership. In effect we have postulated a collective utility function for the entire WC.
+
+ 
+
+For CCs they try to maximize their utility as a positive function of all the various final goods they can consume… which is completely traditional EXCEPT our utility function is a collective utility function for the whole CC, not a utility function for an individual member. But this is not a problem because each CC approves or disapproves the proposals of its own members. The planning process has nothing to do with this. Consumers do not participate in our planning process as individuals. The entire CC participates in the  planning process… proposing what the entire CC wants to consume and submitting the average effort rating (plus allowances for disabled members, retirees, etc.) for the entire CC as its “justification” for why the entire CC should be allowed to consume what it has asked for in its submission. In the real world the CC does not need to formulate a collective utility function. But to carry out our simulation WE have to postulate a collective utility function for the entire CC.
+
+ 
+
+For WCs they try to maximize their utility… which is NOT traditional because that is not what capitalist firms do. But our WCs are not capitalist firms, they are worker self-managed firms, and we treat their members as trying to maximize their utility subject to a “social responsibility constraint.”WC utility is a negative function of their effort at work, e, and a positive function of their average effort rating -- because the average effort rating at any WC is what determines the income its members will have on average as consumers in their CCs. And the average effort rating for any WC is just its ratio of the social benefits from its output to the social cost of its inputs, SB/SC. I’m going to call that ratio, SB/SC, r. So a WC will regard a higher e as bad… greater disutility from working harder… and a higher SB/SC=r as good… higher average wage in effect for WC members. So… for WCs we have U(e,r) where the partial of U w.r.t. e is negative (and gets increasingly more negative as e rises), and the partial of U w.r.t. r is positive (but decreases as r rises).
+
+ 
+
+Now for the constraints:
+
+ 
+
+1.       CCs maximize their council members’ utility subject to the constraint that the social cost of the consumption bundle for the whole council cannot exceed the average effort rating plus allowances for the whole council. So if the average effort rating plus allowances for CC(k) is higher than the average effort rating plus allowances for CC(j), CC(k) will be approved for a consumption bundle that has a higher social cost. We have always made the average effort ratings for all CCs in our simulations equal to each other. In the real world they would differ somewhat because some CCs would have members who had higher effort ratings from their coworkers at work than did other CCs. Also there are allowances for disabled, children, retirees etc. in CCs, and those would differ somewhat from CC to CC in the real world. But none of this is relevant to anything we are trying to demonstrate with the simulations, so I don’t see why we should not continue to assume the average effort rating of CC members is the same in all CCs.
+
+ 
+
+2.       WCs maximize their members utility subject to the following constraints:
+
+ 
+
+a.       Their production function determines the relationship between their output and various inputs. Cobb Douglas works fine, and e is one of the inputs.
+
+b.      The indicative prices for their outputs and all inputs are givens.
+
+c.       SC is just the sum of the indicative price times the quantity of all inputs used.
+
+d.      SB is just the indicative price of their output times the quantity of their output they produce.
+
+e.      And finally, the “social responsibility constraint” is that SB ≥SC… which is the same as SB/SC≥1… because otherwise everyone else in the economy would be better off if the WC did not do what it is proposing to do, and others would vote thumbs down and disapprove the proposal.
+
+ 
+
+This means that while average effort ratings for CCs will all be equal by assumption, for convenience, the solution values for r and e will differ for different WCs in our simulations. They will differ because the U(e,r)’s will be different for different WCs AND the production functions will be different for different WCs.
+
+ 
+
+ASSUMING THAT SOLVING THE OPTIMIZATION PROBLEMS FOR THE WCs IN THIS WAY IS NOT SIGNIFICANTLY MORE PROBLEMATIC THAN HOW WE HAVE DONE IT UP TO NOW, I THINK WE SHOULD MAKE THE CHANGE NOW FOR INTELLECTUAL, POLITICAL, AND HISTORICAL – IN THE SENSE OF HOW THIS HAS BEEN WRITTEN UP FOR OVER 25 YEARS NOW – REASONS.
