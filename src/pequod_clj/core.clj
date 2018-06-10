@@ -173,8 +173,72 @@
 (defn iterate-plan []
   (map proposal wcs)
   (map consume ccs)
-
 )
+
+(defn mean [nums]
+  (float (/ (reduce + nums) (count nums))))
+
+
+(defn price-change [i]
+  "Assumes: supply-list, demand-list, surplus-list"
+  (let [supply-list-means (map mean supply-list)
+        demand-list-means (map mean demand-list)
+        averaged-s-and-d (->> (interleave supply-list-means
+                                          demand-list-means)
+                              (partition 2)
+                              (map #(/ (+ %1 %2) 2)))]
+    (->> (interleave (map mean surplus-list) averaged-s-and-d)
+         (partition 2)
+         (map #(/ %1 %2))
+         #(get % i)
+         Math/abs)))
+
+
+(defn other-price-change [j]
+  "Assumes: supply-list, demand-list, surplus-list"
+  (let [averaged-s-and-d (->> (interleave (flatten supply-list)
+                                          (flatten demand-list))
+                              (partition 2)
+                              (map #(/ (+ %1 %2) 2)))]
+    (->> (interleave (flatten surplus-list) averaged-s-and-d)
+         (partition 2)
+         (map #(/ %1 %2))
+         #(get % j))))
+
+
+(defn check-surpluses [surplus-threshold]
+  (letfn [(check-producers [surplus producers inputs]
+            (some #(> (Math/abs (get surplus %))
+                      (* surplus-threshold
+                         (reduce + (map output (get producers %)))))
+                  inputs))
+          (check-supplies [surplus supply inputs]
+            (some #(> (Math/abs (get surplus %))
+                      (* surplus-threshold supply))
+                  inputs))]
+    (let [final-goods-check (check-producers final-surplus final-producers final-goods)
+          im-goods-check (check-producers input-surplus input-producers intermediate-inputs)
+          nature-check (check-supplies nature-surplus nature-resources-supply nature-types)
+          labor-check (check-supplies labor-surplus labor-supply labor-types)]
+      (every? nil? [final-goods-check im-goods-check nature-check labor-check]))))
+
+
+(defn raise-delta [d]
+  (let [price-delta (->> [0.1 (+ 0.01 d)]
+                         (apply min)
+                         (format "%.2f")
+                         Float/valueOf)]
+   {:price-delta price-delta
+    :delta-delay 10}))
+
+
+(defn lower-delta [d]
+  (let [price-delta (->> [0.1 (- d 0.01)]
+                         (apply max)
+                         (format "%.2f")
+                         Float/valueOf)]
+   {:price-delta price-delta
+    :delta-delay 5}))
 
 
 ; https://github.com/msszczep/pequod2/blob/master/pequod2.nlogo
