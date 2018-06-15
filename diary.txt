@@ -53,3 +53,8 @@ July 1st: Return.  Be ready!
 S: How much do you dislike effort
 k: Diminishing return to more effort
 value of their product (price of product * quantity) - (price of inputs * inputs) - Se^k [effort terms]
+
+June 10, 2018
+Excellent progress in converting all the under-the-hood functions into Clojure.  I feel like I understand
+all the pieces and how they fit together.  I have the pieces; now it's a matter of getting them to fit
+together.  I'll email Michael (cc: Robin) tomorrow and work on that next!

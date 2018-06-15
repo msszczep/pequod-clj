@@ -1,45 +1,52 @@
-(ns pequod-clj.core
-  (:require [clojure.math.numeric-tower :as math :refer [expt]]))
-
-(def final-goods [])
-(def intermediate-inputs [])
-(def nature-types [])
-(def labor-types [])
-
-(def final-prices [])
-(def input-prices [])
-(def nature-prices [])
-(def labor-prices [])
+(ns pequod-clj.core)
 
 (def old-final-types [])
 (def old-input-types [])
 (def old-nature-prices [])
 (def old-labor-prices [])
 
-(def threshold-met? [])
-(def pdlist [])
-(def price-deltas [])
-(def delta-delay [])
-
 (def lorenz-points [])
 (def gini-index-reserve [])
 
-(defn initialize-prices []
-  ; these are the values set by default in interface
-  (def init-final-price 100)
-  (def init-intermediate-price 100)
-  (def init-labor-price 150)
-  (def init-nature-price 150)
-  (def finals 4)
-  (def inputs 4)
-  (def resources 1)
-  (def labors 1)
-  (def final-prices (repeat finals init-final-price))
-  (def input-prices (repeat inputs init-intermediate-price))
-  (def nature-prices (repeat resources init-nature-price))
-  (def labor-prices (repeat labors init-labor-price))
-  (def price-deltas [0.05 0.05 0.05 0.05])
-  (def pdlist (repeat (+ finals inputs resources labors) 0.05)))
+; these are the values set by default in interface
+
+; setup:
+(def init-final-price 100)
+(def init-intermediate-price 100)
+(def init-labor-price 150)
+(def init-nature-price 150)
+
+(def finals 4)
+(def inputs 4)
+(def resources 1)
+(def labors 1)
+
+(def final-prices (repeat finals init-final-price))
+(def input-prices (repeat inputs init-intermediate-price))
+(def nature-prices (repeat resources init-nature-price))
+(def labor-prices (repeat labors init-labor-price))
+
+(def price-deltas [0.05 0.05 0.05 0.05])
+(def pdlist (repeat (+ finals inputs resources labors) 0.05))
+
+(def delta-delay 5)
+(def price-delta 0.1)
+(def threshold-met? false)
+
+(def final-goods (range 1 (inc finals)))
+(def intermediate-inputs (range 1 (inc inputs)))
+(def nature-types (range 1 (inc resources)))
+(def labor-types (range 1 (inc labors)))
+
+(def final-surpluses [])
+(def input-surpluses [])
+(def nature-surpluses [])
+(def labor-surpluses [])
+
+(def input-exponents [])
+(def nature-exponents [])
+(def labor-exponents [])
+(def input-exponents [])
 
 (defn standardize-prices []
   (def init-final-price 80)
@@ -69,6 +76,8 @@
              :utility-exponents (repeat finals (+ cz (rand cz)))
              :final-demands (repeat 5 0)})))
 
+; TODO: Ensure (rand) actually makes a different rand every time
+(create-ccs 100 10 4)
 
 (defn create-wcs [worker-councils goods industry]
   (->> goods
@@ -76,6 +85,58 @@
                      {:industry industry :product %}))
        flatten))
 
+; (create-wcs 80 [1 2 3 4] 1)
+
+
+(defn continue-setup-wcs [wc]
+  "Assumes wc is a map"
+  (letfn [(get-random-subset [input-seq]
+            (->> input-seq
+                 shuffle
+                 (take (rand-nth input-seq))
+                 sort))]
+    (let [production-inputs (vector (get-random-subset intermediate-inputs)
+                                    (get-random-subset nature-types)
+                                    (get-random-subset labor-types))
+          ; Skipping Lines 362 & 363; hoping improvements in code will make this obsolete
+          xe 0.05
+          c xe
+          input-exponents (when (pos? (count (first production-inputs)))
+                            (let [xz (/ 0.2 (count (first production-inputs)))]
+                              (take (inc (count (first production-inputs)))
+                                    (repeatedly #(+ xz (rand xz))))))
+          nature-exponents (let [rz (/ 0.2 (count (second production-inputs)))]
+                             (take (inc (count (second production-inputs)))
+                                   (repeatedly #(+ 0.05 rz (rand rz)))))
+          labor-exponents (let [lz (/ 0.2 (count (last production-inputs)))]
+                            (take (inc (count (last production-inputs)))
+                                  (repeatedly #(+ 0.05 lz (rand lz)))))
+          cq 0.25
+          ce 1  ; note: set as S in original Netlogo
+          du 7 ; note: set as A in original Netlogo
+          k du
+          capital-s ce
+          capital-a cq
+          effort 0.5
+          output 0
+          labor-quantities [0]]
+      (merge wc {:production-inputs production-inputs
+                 :xe xe
+                 :c c
+                 :input-exponents input-exponents
+                 :nature-exponents nature-exponents
+                 :labor-exponents labor-exponents
+                 :cq cq
+                 :ce ce
+                 :du du
+                 :S capital-s
+                 :A capital-a
+                 :effort effort
+                 :output output
+                 :labor-quantities labor-quantities}))))
+
+
+(continue-setup-wcs (first wcs))
 
 (defn calculate-consumer-utility [cc]
   (let [final-demands (:final-demands cc)
@@ -105,57 +166,9 @@
                    (inc num-people-counter)))))))
 
 
-(defn setup-wcs [wc]
-  (letfn [(get-random-subset [input-seq]
-            (->> input-seq
-                 shuffle
-                 (take (rand-nth input-seq))
-                 sort))]
-   (let [l1 (get-random-subset intermediate-inputs)
-         l2 (get-random-subset nature-types)
-         l3 (get-random-subset labor-types)
-         production-inputs (vector l1 l2 l3)
-         ; Skipping Lines 362 & 363; hoping improvements in code will make this obsolete
-         xe 0.05
-         c xe
-         input-exponents (when (pos? (count (first production-inputs)))
-                           (let [xz (/ .2 (count (first production-inputs)))]
-                             (rest (take (inc (count (first production-inputs)))
-                                         (+ xz (rand xz))))))
-         nature-exponents (let [rz (/ .2 (count (second production-inputs)))]
-                            (rest (take (inc (count (second production-inputs)))
-                                        (+ 0.05 rz (rand rz)))))
-         labor-exponents (let [lz (/ .2 (count (last production-inputs)))]
-                            (rest (take (inc (count (last production-inputs))) 
-                                        (+ 0.05 lz (rand lz)))))
-         cq 7 ; cq-init
-         ce 1 ; ce-init
-         du .25 ; du-init
-         k du
-         s ce ; note: set as S in original Netlogo
-         a cq ; note: set as A in original Netlogo
-         effort .5
-         output 0
-         labor-quantities [0]
-         (update-lorenz-and-gini ccs)
-         ])))
-
-
-(defn setup []
+#_(defn setup []
   (do 
     ; TODO: Set up random-seed equivalent (l. 288)
-    (initialize-prices)
-    (def price-delta 0.1)
-    (def delta-delay 5)
-    (def threshold-met? false)
-    (def final-goods (range 1 (inc finals)))
-    (def intermediate-inputs (range 1 (inc inputs)))
-    (def nature-types (range 1 (inc resources)))
-    (def labor-types (range 1 (inc labors)))
-    (def final-surpluses [])
-    (def input-surpluses [])
-    (def nature-surpluses [])
-    (def labor-surpluses [])
     (def ccs (create-ccs 100 10 finals))
     (let [worker-councils 80 ; number of worker councils default in interface
           ]
