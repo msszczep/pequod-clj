@@ -48,6 +48,8 @@
 (def labor-exponents [])
 (def input-exponents [])
 
+(def ticks 0)
+
 (defn standardize-prices []
   (def init-final-price 80)
   (def init-intermediate-price 80)
@@ -73,11 +75,13 @@
              :effort effort
              :income (* 500 effort workers-per-council)
              :cy (+ 6 (rand 9)) ; scalar for whole product in utility function
-             :utility-exponents (repeat finals (+ cz (rand cz)))
+             :utility-exponents (take finals (repeatedly #(+ cz (rand cz))))
              :final-demands (repeat 5 0)})))
 
-; TODO: Ensure (rand) actually makes a different rand every time
-(create-ccs 100 10 4)
+
+(def ccs (create-ccs 100 10 4))
+
+ccs
 
 (defn create-wcs [worker-councils goods industry]
   (->> goods
@@ -85,7 +89,7 @@
                      {:industry industry :product %}))
        flatten))
 
-; (create-wcs 80 [1 2 3 4] 1)
+(def wcs (create-wcs 80 [1 2 3 4] 1))
 
 
 (defn continue-setup-wcs [wc]
@@ -136,46 +140,46 @@
                  :labor-quantities labor-quantities}))))
 
 
-(continue-setup-wcs (first wcs))
+(map continue-setup-wcs wcs)
+
 
 (defn calculate-consumer-utility [cc]
   (let [final-demands (:final-demands cc)
-        utility-exponents (:utility-exponents cc)])
-    (* cy (reduce * (repeat (count final-goods)
-                            (expt final-demands utility-exponents)))))
+        utility-exponents (:utility-exponents cc)
+        cy (:cy cc)]
+    (->> (interleave final-demands utility-exponents)
+         (partition 2)
+         (map #(Math/pow (first %) (last %)))
+         (reduce *)
+         (* cy))))
+
+
+(mapv calculate-consumer-utility ccs)
 
 
 (defn update-lorenz-and-gini [ccs]
   (let [num-people (count ccs)
         sorted-wealths (mapv calculate-consumer-utility ccs)
         total-wealth (reduce + sorted-wealths)]
-      (when (pos? total-wealth)
-        (loop [wealth-sum-so-far 0
-               index 0
-               gini-index-reserve 0
-               lorenz-points []
-               num-people-counter 0]
-          (if (= num-people num-people-counter)
-            lorenz-points
-            (recur (+ wealth-sum-so-far (get sorted-wealths index))
-                   (inc index)
-                   (+ gini-index-reserve
-                      (/ index num-people)
-                      (- (/ wealth-sum-so-far total-wealth)))
-                   (cons (* (/ wealth-sum-so-far total-wealth) 100) lorenz-points)
-                   (inc num-people-counter)))))))
+    (when (pos? total-wealth)
+      (loop [wealth-sum-so-far 0
+             index 0
+             gini-index-reserve 0
+             lorenz-points []
+             num-people-counter 0]
+        (if (= num-people num-people-counter)
+          lorenz-points
+          (recur (+ wealth-sum-so-far (get sorted-wealths index))
+                 (inc index)
+                 (+ gini-index-reserve
+                    (/ index num-people)
+                    (- (/ wealth-sum-so-far total-wealth)))
+                 (cons (* (/ wealth-sum-so-far total-wealth) 100) lorenz-points)
+                 (inc num-people-counter)))))))
 
+(update-lorenz-and-gini ccs)
 
-#_(defn setup []
-  (do 
-    ; TODO: Set up random-seed equivalent (l. 288)
-    (def ccs (create-ccs 100 10 finals))
-    (let [worker-councils 80 ; number of worker councils default in interface
-          ]
-      (create-wcs worker-councils final-goods 0)
-      (create-wcs worker-councils intermediate-inputs 1)
-      (map setup-wcs wcs)
-) ))
+(pos? (reduce + sorted-wealths))
 
 (defn proposal [wc]
   wc)
