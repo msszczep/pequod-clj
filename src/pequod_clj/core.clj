@@ -1,4 +1,7 @@
-(ns pequod-clj.core)
+(ns pequod-clj.core
+  (:use [numeric.expresso.core :as ex]))
+
+; TODO test numeric.expresso
 
 (def old-final-types [])
 (def old-input-types [])
@@ -79,18 +82,14 @@
              :final-demands (repeat 5 0)})))
 
 
-(def ccs (create-ccs 100 10 4))
-
-ccs
-
 (defn create-wcs [worker-councils goods industry]
   (->> goods
        (map #(repeat (/ worker-councils 2 (count goods))
                      {:industry industry :product %}))
        flatten))
 
-(def wcs (create-wcs 80 [1 2 3 4] 1))
 
+(def ccs (create-ccs 100 10 4))
 
 (defn continue-setup-wcs [wc]
   "Assumes wc is a map"
@@ -139,8 +138,7 @@ ccs
                  :output output
                  :labor-quantities labor-quantities}))))
 
-
-(map continue-setup-wcs wcs)
+(def wcs (map continue-setup-wcs (create-wcs 80 [1 2 3 4] 1)))
 
 
 (defn calculate-consumer-utility [cc]
@@ -152,9 +150,6 @@ ccs
          (map #(Math/pow (first %) (last %)))
          (reduce *)
          (* cy))))
-
-
-(mapv calculate-consumer-utility ccs)
 
 
 (defn update-lorenz-and-gini [ccs]
@@ -179,7 +174,6 @@ ccs
 
 (update-lorenz-and-gini ccs)
 
-(pos? (reduce + sorted-wealths))
 
 (defn proposal [wc]
   wc)
@@ -191,6 +185,11 @@ ccs
   (map proposal wcs)
   (map consume ccs)
 )
+
+(defn input-count [wc]
+  ((comp count flatten :production-inputs) wc))
+
+(map input-count wcs)
 
 (defn mean [nums]
   (float (/ (reduce + nums) (count nums))))

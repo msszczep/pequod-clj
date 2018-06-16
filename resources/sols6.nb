@@ -1,0 +1,18 @@
+vars = {z, x1, x2, x3, x4, x5, x6, ef};
+
+y[vars] := a * x1^b1 * x2^b2 * x3^b3 * x4^b4 * x5^b5 * x6^b6 * ef^c
+dy[j_] := D[y[vars], x_j]
+
+sols = Solve[
+  z == a * x1^b1 * x2^b2 * x3^b3 * x4^b4 * x5^b5 * x6^b6 * ef^c,
+  p == lambda &&
+  p_1 == lambda * dy[1] && 
+  p_2 == lambda * dy[2] && 
+  p_3 == lambda * dy[3] && 
+  p_4 == lambda * dy[4] && 
+  p_5 == lambda * dy[5] && 
+  p_6 == lambda * dy[6] &&
+  k * S * ef^(k-1) == lambda * D[y[vars], ef],
+  vars];
+
+sols6 = % /. lambda -> p_1 
