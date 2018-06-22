@@ -91,6 +91,8 @@
 
 (def ccs (create-ccs 100 10 4))
 
+ccs
+
 (defn continue-setup-wcs [wc]
   "Assumes wc is a map"
   (letfn [(get-random-subset [input-seq]
@@ -106,13 +108,13 @@
           c xe
           input-exponents (when (pos? (count (first production-inputs)))
                             (let [xz (/ 0.2 (count (first production-inputs)))]
-                              (take (inc (count (first production-inputs)))
+                              (take (count (first production-inputs))
                                     (repeatedly #(+ xz (rand xz))))))
           nature-exponents (let [rz (/ 0.2 (count (second production-inputs)))]
-                             (take (inc (count (second production-inputs)))
+                             (take (count (second production-inputs))
                                    (repeatedly #(+ 0.05 rz (rand rz)))))
           labor-exponents (let [lz (/ 0.2 (count (last production-inputs)))]
-                            (take (inc (count (last production-inputs)))
+                            (take (count (last production-inputs))
                                   (repeatedly #(+ 0.05 lz (rand lz)))))
           cq 0.25
           ce 1  ; note: set as S in original Netlogo
@@ -138,7 +140,13 @@
                  :output output
                  :labor-quantities labor-quantities}))))
 
-(def wcs (map continue-setup-wcs (create-wcs 80 [1 2 3 4] 1)))
+(def wcs
+  (->> (create-wcs 80 [1 2 3 4] 1)
+       (map continue-setup-wcs)))
+
+(sort (first wcs))
+
+(map :production-inputs wcs)
 
 
 (defn calculate-consumer-utility [cc]
@@ -174,7 +182,6 @@
 
 (update-lorenz-and-gini ccs)
 
-
 (defn proposal [wc]
   wc)
 
@@ -194,6 +201,8 @@
 (defn mean [nums]
   (float (/ (reduce + nums) (count nums))))
 
+; (use 'numeric.expresso.core)
+; https://github.com/clojure-numerics/expresso
 
 (defn price-change [i]
   "Assumes: supply-list, demand-list, surplus-list"
