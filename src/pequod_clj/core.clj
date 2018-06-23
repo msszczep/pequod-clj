@@ -1,5 +1,5 @@
 (ns pequod-clj.core
-  (:use [numeric.expresso.core :as ex]))
+  (:use [numeric.expresso.core :as expresso]))
 
 ; TODO test numeric.expresso
 
@@ -147,6 +147,51 @@ ccs
 (sort (first wcs))
 
 (map :production-inputs wcs)
+
+(solve '[x] '(= (+ 1 x) 3))
+(differentiate '[x] (ex (* (+ x 1) (+ x 2))))
+(def t2 (solve '[x y] (ex (= (+ (** x 2) (** y 2)) 1))
+        (ex (= (+ x y) a))))
+(solve '[x y z] (ex (= z (* 2 x))) (ex (= y (+ x z))) (ex (= x [1 2 3])))
+
+
+;vars = {z, x1, x2, x3, x4, x5, x6, ef};
+
+
+; TODO: rename y to something more descriptive
+(defn y-orig [{x1 :x1, x2 :x2, x3 :x3, ef :ef, b1 :b1, b2 :b2, b3 :b3, a :a, c :c}]
+  (* a
+     (Math/pow ef c)
+     (Math/pow x1 b1)
+     (Math/pow x2 b2)
+     (Math/pow x3 b3)))
+
+(y {:x1 3 :x2 1 :x3 1 :ef 0.5, :a 0.25, :b1 0.344, :b2 0.2881, :b3 0.37606, :c 0.25})
+
+
+(defn y [vars] 
+  (ex
+    (* a
+       (** ef c)
+       (** x1 b1)
+       (** x2 b2)
+       (** x3 b3))))
+
+
+(defn dy [j]
+  (let [xj (cond (= j 1) '[x1]
+                 (= j 2) '[x2]
+                 (= j 3) '[x3])]
+    (differentiate xj (y '[z x1 x2 x3 ef]))))
+
+
+(solve '[z x1 x2 x3 ef]
+  (ex (= z (* a (** ef c) (** x1 b1) (** x2 b2) (** x3 b3))))
+  (ex (= p lambda)
+      (= p1 (* lambda (dy 1)))
+      (= p2 (* lambda (dy 2)))
+      (= p3 (* lambda (dy 3)))
+      (= (* k S (** ef (- k 1))) (* lambda (differentiate ef (dy '[z x1 x2 x3 ef]))))))
 
 
 (defn calculate-consumer-utility [cc]
