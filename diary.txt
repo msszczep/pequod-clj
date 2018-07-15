@@ -73,4 +73,16 @@ the notes from Michael regarding research into computing through the equations h
 No matter; am trying another approach.  I found a library called symja that looks like it could be 
 useful.  Am seeing if it can (1) compute the equations as Mathematica did, and (2) can it be ported
 into Clojure (it's written in Java, so there's a prayer's chance it can).  Continuing...
- 
+
+July 15, 2018
+On Friday morning I got an idea: Use Wolfram as an API, have it compute the equations, then deliver the results
+back as a web call to -- whatever, the Clojure code, the Wolfram code, the Netlogo code, what have you.
+I spoke with Robin over the phone about the idea; he was OK with giving it a try and discussing next week.
+Yesterday, I spent the evening working out the details after a whole lot of trial and error.  After 
+maybe 40 builds, I finally got the output I wanted.  And today, after watching the FIFA men's World Cup
+final, I got it to a working API.  Here it is: 
+
+http://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=1
+
+Change the n=1 value to some other number and it'll recompute.  I should test this out to confirm that
+this scales.  Next thoughts: Memoize and write a function to convert this to Clojure. 
