@@ -2,6 +2,7 @@
   (:use [numeric.expresso.core :as expresso]))
 
 ; TODO test numeric.expresso
+; (in-ns 'pequod-clj.core)
 
 (def old-final-types [])
 (def old-input-types [])
@@ -49,7 +50,6 @@
 (def input-exponents [])
 (def nature-exponents [])
 (def labor-exponents [])
-(def input-exponents [])
 
 (def ticks 0)
 
@@ -88,10 +88,7 @@
                      {:industry industry :product %}))
        flatten))
 
-
 (def ccs (create-ccs 100 10 4))
-
-ccs
 
 (defn continue-setup-wcs [wc]
   "Assumes wc is a map"
@@ -144,9 +141,9 @@ ccs
   (->> (create-wcs 80 [1 2 3 4] 1)
        (map continue-setup-wcs)))
 
-(sort (first wcs))
+;(sort (first wcs))
 
-(map :production-inputs wcs)
+;(map :production-inputs wcs)
 
 (solve '[x] '(= (+ 1 x) 3))
 (differentiate '[x] (ex (* (+ x 1) (+ x 2))))
@@ -178,6 +175,13 @@ ccs
        (** x3 b3))))
 
 
+(defn y1 [vars] 
+  (ex
+    (* a
+       (** ef c)
+       (** x1 b1))))
+
+
 (defn dy [j]
   (let [xj (cond (= j 1) '[x1]
                  (= j 2) '[x2]
@@ -185,14 +189,31 @@ ccs
     (differentiate xj (y '[z x1 x2 x3 ef]))))
 
 
-(solve '[z x1 x2 x3 ef]
-  (ex (= z (* a (** ef c) (** x1 b1) (** x2 b2) (** x3 b3))))
-  (ex (= p lambda)
-      (= p1 (* lambda (dy 1)))
-      (= p2 (* lambda (dy 2)))
-      (= p3 (* lambda (dy 3)))
-      (= (* k S (** ef (- k 1))) (* lambda (differentiate ef (dy '[z x1 x2 x3 ef]))))))
+(def sols3
+  (solve '[z x1 x2 x3 ef]
+          (ex (= z (* a (** ef c) (** x1 b1) (** x2 b2) (** x3 b3))))
+          (ex (= p p1))
+          (ex (= p1 (* p1 (dy 1))))
+          (ex (= p2 (* p1 (dy 2))))
+          (ex (= p3 (* p1 (dy 3))))
+          (ex (= (* k s (** ef (- k 1))) (* p1 (differentiate '[ef] (y '[z x1 x2 x3 ef])))))
+          ))
 
+
+(def sols1
+  (solve 'x1
+         (ex (= z (* a (** ef c) (** x1 b1))))
+         (ex (= p p1))
+         (ex (= p1 (* p1 (differentiate '[x1] (y1 '[z x1 ef])))))
+         (ex (= (* k s (** ef (- k 1))) (* p1 (differentiate '[ef] (y1 '[z x1 ef])))))
+         ))
+
+(defn neg-ln [x] ((comp - ln) x))
+
+(exp (/ (+ (neg-ln a) (neg-ln c) (ln k) (ln p1) (ln s) (* (ln c) b1) (* (neg-ln k) b1) 
+           (* (neg-ln s) b1) (* (neg-ln b1) b1) (* (ln p1) (b1)) (* (ln c) b2) 
+           (* (neg-ln k) b2) (* (neg-ln s) b2) (* (neg-ln b2) b2) (* (ln p2) b2)) 
+        (+ c (- k) (* k b1) (* k b2))))
 
 (defn calculate-consumer-utility [cc]
   (let [final-demands (:final-demands cc)

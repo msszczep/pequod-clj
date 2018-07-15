@@ -58,3 +58,19 @@ June 10, 2018
 Excellent progress in converting all the under-the-hood functions into Clojure.  I feel like I understand
 all the pieces and how they fit together.  I have the pieces; now it's a matter of getting them to fit
 together.  I'll email Michael (cc: Robin) tomorrow and work on that next!
+
+June 23, 2018
+Getting closer.  Got expresso loaded and working with equations.  So far so good.  Am confused with
+the notation of the Solve[] command.  Will write to Michael to clarify. 
+
+June 28, 2018
+After emailing Michael with a reminder, I finally got the answer needed.  The notation I was confused
+by was a mistake.  It's now clear.  Back to work.
+
+July 9, 2018
+No response from Michael in days; ditto Robin.  Admittedly, it's the summer.  But at the same time
+the notes from Michael regarding research into computing through the equations has not been great.
+No matter; am trying another approach.  I found a library called symja that looks like it could be 
+useful.  Am seeing if it can (1) compute the equations as Mathematica did, and (2) can it be ported
+into Clojure (it's written in Java, so there's a prayer's chance it can).  Continuing...
+ 

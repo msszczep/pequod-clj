@@ -1,0 +1,11 @@
+Manipulate[
+With[{xs = Table[Subscript[x, i],{i, n}], 
+   xbs = Table[Power[Subscript[x, i], Subscript[b, i]], {i, n}]},
+ With[{vars = Flatten@List[z, xs, ef], 
+    yvars = Flatten@List[a, xbs, Power[ef, c]]},
+ With[{plines = Table[ Subscript[p, i] == Times[\[Lambda], D[Apply[Times, yvars], Subscript[x, i]]], {i, n}]},
+    Solve[And[Flatten[
+    List[z==Apply[Times, yvars], 
+       p == \[Lambda], plines, 
+       Times[k, s, Power[ef, k-1]] == Times[\[Lambda], D[Apply[Times, yvars], ef]]]]], vars]]]] , 
+{n, 1, 12, 1}]
