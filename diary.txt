@@ -85,4 +85,11 @@ final, I got it to a working API.  Here it is:
 http://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=1
 
 Change the n=1 value to some other number and it'll recompute.  I should test this out to confirm that
-this scales.  Next thoughts: Memoize and write a function to convert this to Clojure. 
+this scales.  Next thoughts: Memoize and write a function to convert this to Clojure.
+
+July 24, 2018
+Better version:
+
+https://www.wolframcloud.com/objects/6418ed29-be1b-4552-b600-ca5f13689f43?n=3
+
+Much more compact, easier to parse. 
