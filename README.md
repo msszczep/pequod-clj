@@ -1,14 +1,14 @@
 # pequod-clj
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure rewrite of the Pequod library.
 
 ## Usage
 
-FIXME
+TODO:
+
+(wolfram->clj solution1)
 
 ## License
 
-Copyright © 2018 FIXME
+Copyleft © 2018 by Mitchell Szczepanczyk and friends 
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
