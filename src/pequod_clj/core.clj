@@ -376,7 +376,15 @@
                   ((partial str "(+ "))
                   (str ")")))
             (convert-denominator-to-clj [to-convert]
-              (-> to-convert
+              (->> to-convert
+                   (re-seq #"b\d+")
+                   count
+                   inc
+                   (range 1)
+                   (map #(str "(* k b" % ")"))
+                   (clojure.string/join " ")
+                   (str "(+ c (- k) ")
+                   ; FILL ME                   
                   ))]
 ; (+ c (- k) (* k b1) ... (* k bN))
       (str "(Math/pow Math/E (/"
