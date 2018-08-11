@@ -370,6 +370,7 @@
                 (clojure.string/replace #"^E\^\(\(" "")
                 (clojure.string/replace #"\)$" "")
                 (clojure.string/replace #"^-\(" "- (")
+                (clojure.string/replace #"^-" "- ")
                 (clojure.string/split #" ")
                 ((partial partition 2))
                 ((partial map (juxt first (comp log->clj last))))
@@ -400,7 +401,6 @@
          clean-wolfram-step-one
          (map #(clojure.string/split % #" -> "))
          (map (juxt first (comp convert-n-and-d
-                                #(clojure.string/split % #"/") 
+                                #(clojure.string/split % #"/")
                                 last)))
          (into {}))))
-
