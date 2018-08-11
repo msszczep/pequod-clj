@@ -341,62 +341,66 @@
 
 (def s1 "z -> E^((-(k*Log[a]) - b1*k*Log[b1] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»])/(c - k + b1*k))")
 
-(defn log->clj [fragment]
-  (-> fragment
-      (clojure.string/replace #"^\(" "")
-      (clojure.string/replace #"\)$" "")
-      (clojure.string/replace #"Log\[([a-z0-9λ]+)\]" "(Math/log $1)")
-      (clojure.string/replace #"\*" " ")
-      (clojure.string/replace #"^" "(* ")
-      (clojure.string/replace #"$" ")")))
 
-
-; TODO: Fix denominator
 ; TODO: Account for divided-by-c where n is odd and n>1
-; TODO: convert split to map
+; TODO: Fix ef
 (defn wolfram->clj [equation]
-  "Takes one of the components as input, returns Clojure code as output"
-  (let [[v eq] (clojure.string/split equation #" -> ")
-        [numerator denominator] (clojure.string/split eq #"/")]
-    (letfn [(final-join [[f s]]
-              (if (= f "+")
-                s
-                (str "(- " s ")")))
-            (convert-numerator-to-clj [to-convert]
-              (-> to-convert
-                  (clojure.string/replace #"Î»" "λ")
-                  (clojure.string/replace #"^E\^\(\(" "")
-                  (clojure.string/replace #"\)$" "")
-                  (clojure.string/replace #"^-\(" "- (")
-                  (clojure.string/split #" ")
-                  ((partial partition 2))
-                  ((partial map (juxt first (comp log->clj last))))
-                  ((partial map final-join))
-                  ((partial clojure.string/join " "))
-                  ((partial str "(+ "))
-                  (str ")")))
-            (convert-denominator-to-clj [to-convert]
-              (->> to-convert
-                   (re-seq #"b\d+")
-                   count
-                   inc
-                   (range 1)
-                   (map #(str "(* k b" % ")"))
-                   (clojure.string/join " ")
-                   (str "(+ c (- k) ")
-                   ; FILL ME                   
-                  ))]
-; (+ c (- k) (* k b1) ... (* k bN))
-      (str "(Math/pow Math/E (/"
-           (convert-numerator-to-clj numerator)
-           " "
-           (convert-denominator-to-clj denominator)
-           "))"))))
+  "Takes the Wolfram API output as input, returns Clojure code as output"
+  (letfn [(clean-wolfram-step-one [text]
+            (-> text
+                (clojure.string/replace #"\{\{" ", ")
+                (clojure.string/replace #"\}\}" "")
+                (clojure.string/split #", ")
+                rest))
+          (final-join [[f s]]
+            (if (= f "+")
+              s
+              (str "(- " s ")")))
+          (log->clj [fragment]
+            (-> fragment
+                (clojure.string/replace #"^\(" "")
+                (clojure.string/replace #"\)$" "")
+                (clojure.string/replace #"Log\[([a-z0-9λ]+)\]" "(Math/log $1)")
+                (clojure.string/replace #"\*" " ")
+                (clojure.string/replace #"^" "(* ")
+                (clojure.string/replace #"$" ")")))
+          (convert-numerator-to-clj [to-convert]
+            (-> to-convert
+                (clojure.string/replace #"Î»" "λ")
+                (clojure.string/replace #"^E\^\(\(" "")
+                (clojure.string/replace #"\)$" "")
+                (clojure.string/replace #"^-\(" "- (")
+                (clojure.string/split #" ")
+                ((partial partition 2))
+                ((partial map (juxt first (comp log->clj last))))
+                ((partial map final-join))
+                ((partial clojure.string/join " "))
+                ((partial str "(+ "))
+                (str ")")))
+          (convert-denominator-to-clj [to-convert]
+            (->> to-convert
+                 (re-seq #"b\d+")
+                 count
+                 inc
+                 (range 1)
+                 (map #(str "(* k b" % ")"))
+                 (clojure.string/join " ")
+                 (str "(+ c (- k) ")
+                 (conj [])
+                 (cons ")")
+                 reverse
+                 (apply str)))
+          (convert-n-and-d [[n d]]
+            (str "(Math/pow Math/E (/"
+                 (convert-numerator-to-clj n)
+                 " "
+                 (convert-denominator-to-clj d)
+                 "))"))]
+    (->> equation
+         clean-wolfram-step-one
+         (map #(clojure.string/split % #" -> "))
+         (map (juxt first (comp convert-n-and-d
+                                #(clojure.string/split % #"/") 
+                                last)))
+         (into {}))))
 
-
-(defn pre-wolfram->clj [text]
-  (-> text
-      (clojure.string/replace #"\{\{" ", ")
-      (clojure.string/replace #"\}\}" "")
-      (clojure.string/split #", ")
-      rest))
