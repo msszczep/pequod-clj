@@ -341,9 +341,7 @@
 
 (def s1 "z -> E^((-(k*Log[a]) - b1*k*Log[b1] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»])/(c - k + b1*k))")
 
-
 ; TODO: Account for divided-by-c where n is odd and n>1
-; TODO: Fix ef
 (defn wolfram->clj [equation]
   "Takes the Wolfram API output as input, returns Clojure code as output"
   (letfn [(clean-wolfram-step-one [text]
@@ -369,7 +367,6 @@
                 (clojure.string/replace #"Î»" "λ")
                 (clojure.string/replace #"^E\^\(\(" "")
                 (clojure.string/replace #"\)$" "")
-                (clojure.string/replace #"^-\(" "- (")
                 (clojure.string/replace #"^-" "- ")
                 (clojure.string/split #" ")
                 ((partial partition 2))
