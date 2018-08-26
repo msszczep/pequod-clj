@@ -397,14 +397,31 @@
                  " "
                  (convert-denominator-to-clj d)
                  "))"))
+          (convert-numerator-to-clj-odd-ef [to-convert]
+            (-> to-convert
+                (clojure.string/replace #"Î»" "λ")
+                (clojure.string/split #" ")
+                ((partial partition 2))
+                ((partial map (juxt first (comp log->clj last))))
+                ((partial map final-join))
+                ((partial clojure.string/join " "))
+                ((partial str "(+ "))
+                (str ")")))
+          (convert-n-and-d-odd-ef [[n d]]
+            (str "(/ "
+                 (convert-numerator-to-clj-odd-ef n)
+                 " "
+                 (convert-denominator-to-clj d)
+                 ")"))
           (solve-odd-ef [to-convert]
             (-> to-convert
                 (clojure.string/replace #"^E\^\(\(" "")
                 (clojure.string/replace #"\)\/c\)$" "")
-                #_((juxt #(clojure.string/replace % #"(.*?) [+-] \(.*" "$1")
-                       #(re-seq #"[\+\-] \(.*?\)\/\(.*?\)" %)))
-                (clojure.string/replace #"(.*?) [+-] \(.*" "$1")
-                convert-numerator-to-clj
+                ((juxt (comp convert-numerator-to-clj
+                             #(clojure.string/replace % #"(.*?) [+-] \(.*" "$1"))
+                       (comp (partial map convert-n-and-d-odd-ef)
+                             (partial map #(clojure.string/split % #"/"))
+                             #(re-seq #"[\+\-] \(.*?\)\/\(.*?\)" %))))
             )
           )
          ]
