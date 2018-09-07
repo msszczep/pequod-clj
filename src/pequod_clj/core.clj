@@ -345,6 +345,13 @@
 
 (def s3-ef "E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - b3*Log[b3] + b1*Log[p1] + b2*Log[p2] + b3*Log[p3] - b1*Log[Î»] - b2*Log[Î»] - b3*Log[Î»] + (-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k) - (b1*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b2*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b3*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k))/c)")
 
+(defn convert-ef-odd [equation]
+  (-> equation
+      (clojure.string/replace #"Î»" "λ")
+      (clojure.string/split #" ")
+
+      ))
+
 (defn wolfram->clj [equation]
   "Takes the Wolfram API output as input, returns Clojure code as output"
   (letfn [(clean-wolfram-step-one [text]
@@ -399,14 +406,16 @@
                  "))"))
           (convert-numerator-to-clj-odd-ef [to-convert]
             (-> to-convert
-                (clojure.string/replace #"Î»" "λ")
-                (clojure.string/split #" ")
-                ((partial partition 2))
-                ((partial map (juxt first (comp log->clj last))))
-                ((partial map final-join))
-                ((partial clojure.string/join " "))
-                ((partial str "(+ "))
-                (str ")")))
+;                (clojure.string/replace #"Î»" "λ")
+;                (clojure.string/split #" ")
+;                (clojure.string/replace #"^\(?(b\d+)?\*?\(\-\(k\*Log\[a\]\)" "(* \1 ( - (k*Log[a])")
+;                ((partial partition 2))
+;                ((partial map (juxt first (comp log->clj last))))
+;                ((partial map final-join))
+;                ((partial clojure.string/join " "))
+;                ((partial str "(+ "))
+;                (str ")")
+                ))
           (convert-n-and-d-odd-ef [[n d]]
             (str "(/ "
                  (convert-numerator-to-clj-odd-ef n)
@@ -419,8 +428,9 @@
                 (clojure.string/replace #"\)\/c\)$" "")
                 ((juxt (comp convert-numerator-to-clj
                              #(clojure.string/replace % #"(.*?) [+-] \(.*" "$1"))
-                       (comp (partial map convert-n-and-d-odd-ef)
+                       (comp ; (partial map convert-n-and-d-odd-ef)
                              (partial map #(clojure.string/split % #"/"))
+                             (partial map #(clojure.string/replace % #"^[\+\-] " ""))
                              #(re-seq #"[\+\-] \(.*?\)\/\(.*?\)" %))))
             )
           )
@@ -433,4 +443,5 @@
                                 #(clojure.string/split % #"/")
                                 last)))
          (into {}))))
+
 
