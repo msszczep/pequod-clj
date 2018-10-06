@@ -278,16 +278,6 @@
 (def sol2 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»])/(c - k + b1*k + b2*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - Log[c] + b1*Log[c] + b2*Log[c] + Log[k] - b1*Log[k] - b2*Log[k] + b1*Log[p1] + b2*Log[p2] + Log[s] - b1*Log[s] - b2*Log[s] - Log[Î»])/(c - k + b1*k + b2*k))}}")
 
 
-(defn make-variables-and-equations-map [s]
-  (->> (-> s
-           (clojure.string/replace #"[\{\}]" "")
-           (clojure.string/split #","))
-       (map #(clojure.string/split % #" -> "))
-       (map (juxt (comp keyword clojure.string/trim first) 
-                  (comp identity second)))
-       (into {})))
-
-
 (defn convert-log-fragment [fragment]
   (-> fragment
       (clojure.string/replace #"^\(" "")
@@ -343,6 +333,18 @@
                (comp convert-denominator second)))
         add-surrounding-string)))
 
+
+(defn make-variables-and-equations-map [s]
+  (->> (-> s
+           (clojure.string/replace #"[\{\}]" "")
+           (clojure.string/split #","))
+       (map #(clojure.string/split % #" -> "))
+       (map (juxt (comp keyword clojure.string/trim first) 
+                  (comp convert-z second)))
+       (into {})))
+
+
+; 10/5/2018: Resume with (make-variables-and-equations-map solution1)
 
 (defn convert-ef-odd-top [equation]
   (-> equation
