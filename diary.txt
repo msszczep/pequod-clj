@@ -92,4 +92,11 @@ Better version:
 
 https://www.wolframcloud.com/objects/6418ed29-be1b-4552-b600-ca5f13689f43?n=3
 
-Much more compact, easier to parse. 
+Much more compact, easier to parse.
+
+October 5, 2018
+
+Okay.  I'm giving myself a deadline of getting this app done in working form in 3 months.  I'm tired of
+letting this linger like an albatross over my head.  And to make _sure_ this gets done, I'm locking
+myself into a presentation to give in January -- I _have_ to get this done, so that I have the presentation
+done. 

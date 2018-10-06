@@ -1,5 +1,4 @@
-(ns pequod-clj.core
-  (:use [numeric.expresso.core :as expresso]))
+(ns pequod-clj.core)
 
 ; (in-ns 'pequod-clj.core)
 
@@ -141,79 +140,10 @@
   (->> (create-wcs 80 [1 2 3 4] 1)
        (map continue-setup-wcs)))
 
-;(sort (first wcs))
 
+;(sort (first wcs))
 ;(map :production-inputs wcs)
 
-(solve '[x] '(= (+ 1 x) 3))
-(differentiate '[x] (ex (* (+ x 1) (+ x 2))))
-(def t2 (solve '[x y] (ex (= (+ (** x 2) (** y 2)) 1))
-        (ex (= (+ x y) a))))
-(solve '[x y z] (ex (= z (* 2 x))) (ex (= y (+ x z))) (ex (= x [1 2 3])))
-
-
-;vars = {z, x1, x2, x3, x4, x5, x6, ef};
-
-
-; TODO: rename y to something more descriptive
-(defn y-orig [{x1 :x1, x2 :x2, x3 :x3, ef :ef, b1 :b1, b2 :b2, b3 :b3, a :a, c :c}]
-  (* a
-     (Math/pow ef c)
-     (Math/pow x1 b1)
-     (Math/pow x2 b2)
-     (Math/pow x3 b3)))
-
-(y {:x1 3 :x2 1 :x3 1 :ef 0.5, :a 0.25, :b1 0.344, :b2 0.2881, :b3 0.37606, :c 0.25})
-
-
-(defn y [vars] 
-  (ex
-    (* a
-       (** ef c)
-       (** x1 b1)
-       (** x2 b2)
-       (** x3 b3))))
-
-
-(defn y1 [vars] 
-  (ex
-    (* a
-       (** ef c)
-       (** x1 b1))))
-
-
-(defn dy [j]
-  (let [xj (cond (= j 1) '[x1]
-                 (= j 2) '[x2]
-                 (= j 3) '[x3])]
-    (differentiate xj (y '[z x1 x2 x3 ef]))))
-
-
-(def sols3
-  (solve '[z x1 x2 x3 ef]
-          (ex (= z (* a (** ef c) (** x1 b1) (** x2 b2) (** x3 b3))))
-          (ex (= p p1))
-          (ex (= p1 (* p1 (dy 1))))
-          (ex (= p2 (* p1 (dy 2))))
-          (ex (= p3 (* p1 (dy 3))))
-          (ex (= (* k s (** ef (- k 1))) (* p1 (differentiate '[ef] (y '[z x1 x2 x3 ef])))))
-          ))
-
-
-(def sols1
-  (solve 'x1
-         (ex (= z (* a (** ef c) (** x1 b1))))
-         (ex (= p p1))
-         (ex (= p1 (* p1 (differentiate '[x1] (y1 '[z x1 ef])))))
-         (ex (= (* k s (** ef (- k 1))) (* p1 (differentiate '[ef] (y1 '[z x1 ef])))))
-         ))
-
-(defn neg-ln [x] ((comp - ln) x))
-
-(exp (/ (+ (neg-ln a) (neg-ln c) (ln k) (ln p1) (ln s) (* (ln c) b1) (* (neg-ln k) b1) 
-           (* (neg-ln s) b1) (* (neg-ln b1) b1) (* (ln p1) (b1)) (* (ln c) b2) 
-           (* (neg-ln k) b2) (* (neg-ln s) b2) (* (neg-ln b2) b2) (* (ln p2) b2)) 
-        (+ c (- k) (* k b1) (* k b2))))
 
 (defn calculate-consumer-utility [cc]
   (let [final-demands (:final-demands cc)
@@ -246,7 +176,9 @@
                  (cons (* (/ wealth-sum-so-far total-wealth) 100) lorenz-points)
                  (inc num-people-counter)))))))
 
+
 (update-lorenz-and-gini ccs)
+
 
 (defn proposal [wc]
   wc)
@@ -339,16 +271,78 @@
 ; (Math/log 2.7) -> 0.99325...
 ; (Math/pow 3 5) -> 243.0
 
-(def s1 "z -> E^((-(k*Log[a]) - b1*k*Log[b1] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»])/(c - k + b1*k))")
-
 (def solution3 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] + b3*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] - b3*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] + b3*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] - b3*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x3 -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] + c*Log[b3] - k*Log[b3] + b1*k*Log[b3] + b2*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] - c*Log[p3] + k*Log[p3] - b1*k*Log[p3] - b2*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - b3*Log[b3] + b1*Log[p1] + b2*Log[p2] + b3*Log[p3] - b1*Log[Î»] - b2*Log[Î»] - b3*Log[Î»] + (-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k) - (b1*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b2*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b3*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k))/c)}}")
 
 (def s3-ef "E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - b3*Log[b3] + b1*Log[p1] + b2*Log[p2] + b3*Log[p3] - b1*Log[Î»] - b2*Log[Î»] - b3*Log[Î»] + (-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k) - (b1*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b2*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b3*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k))/c)")
 
-(defn convert-ef-odd-first [equation]
-  (->> equation))
+(def sol2 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»])/(c - k + b1*k + b2*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - Log[c] + b1*Log[c] + b2*Log[c] + Log[k] - b1*Log[k] - b2*Log[k] + b1*Log[p1] + b2*Log[p2] + Log[s] - b1*Log[s] - b2*Log[s] - Log[Î»])/(c - k + b1*k + b2*k))}}")
 
-(defn convert-ef-odd-last [])
+
+(defn make-variables-and-equations-map [s]
+  (->> (-> s
+           (clojure.string/replace #"[\{\}]" "")
+           (clojure.string/split #","))
+       (map #(clojure.string/split % #" -> "))
+       (map (juxt (comp keyword clojure.string/trim first) 
+                  (comp identity second)))
+       (into {})))
+
+
+(defn convert-log-fragment [fragment]
+  (-> fragment
+      (clojure.string/replace #"^\(" "")
+      (clojure.string/replace #"\)$" "")
+      (clojure.string/replace #"Log\[([a-z0-9λ]+)\]" "(Math/log $1)")
+      (clojure.string/replace #"\*" " ")
+      (clojure.string/replace #"^" "(* ")
+      (clojure.string/replace #"$" ")")))
+
+ 
+(defn join-subtrahends [[f s]]
+  (if (= f "+")
+      s
+      (str "(- " s ")")))
+
+
+(defn convert-numerator [to-convert]
+  (-> to-convert
+      (clojure.string/replace #"Î»" "λ")
+      (clojure.string/replace #"^\(-" "- ")
+      (clojure.string/split #" ")
+      ((partial partition 2))
+      ((partial map (juxt first (comp convert-log-fragment last))))
+      ((partial map join-subtrahends))
+      ((partial clojure.string/join " "))
+      ((partial str "(+ "))
+      (str ")")))
+
+
+(defn convert-denominator [to-convert]
+  (->> to-convert
+       (re-seq #"b\d+")
+       count
+       inc
+       (range 1)
+       (map #(str "(* k b" % ")"))
+       (clojure.string/join " ")
+       (str "(+ c (- k) ")
+       (conj [])
+       (cons ")")
+       reverse
+       (apply str)))
+
+
+(defn convert-z [s]
+  (letfn [(add-surrounding-string [[n d]]
+            (str "(Math/pow Math/E (/ " n " " d "))"))]
+    (-> s
+        (clojure.string/replace #"^E\^\(" "")
+        (clojure.string/replace #"\)$" "")
+        (clojure.string/split #"/")
+        ((juxt (comp convert-numerator first) 
+               (comp convert-denominator second)))
+        add-surrounding-string)))
+
 
 (defn convert-ef-odd-top [equation]
   (-> equation
@@ -356,13 +350,11 @@
       (clojure.string/replace #"^\(?(b\d+)?\*?\(\-\(k\*Log\[a\]\)" "(*$1(- (k*Log[a])")
       (clojure.string/split #" ")
       ((partial partition 2))
-;  go on to the next line
       ))
 
-; resume: 9/13/2018
-; (clojure.pprint/pprint (map (comp convert-ef-odd-top first) (last (wolfram->clj s3-ef))))
-
-(defn ef-odd-process-top [equation])
+; resume: 9/25/2018
+; (map convert-subfield (first (map (comp convert-ef-odd-top first) (last (wolfram->clj s3-ef)))))
+; next: put this ^^ code into a function
 
 (defn wolfram->clj [equation]
   "Takes the Wolfram API output as input, returns Clojure code as output"
