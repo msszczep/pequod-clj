@@ -266,16 +266,13 @@
 ; http://ccl.northwestern.edu/netlogo/docs/
 
 
-(def solution1 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»])/(c - k + b1*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] + c*Log[s] - k*Log[Î»])/(c - k + b1*k)), ef -> E^((-Log[a] - b1*Log[b1] - Log[c] + b1*Log[c] + Log[k] - b1*Log[k] + b1*Log[p1] + Log[s] - b1*Log[s] - Log[Î»])/(c - k + b1*k))}}")
+(def s1 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»])/(c - k + b1*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] + c*Log[s] - k*Log[Î»])/(c - k + b1*k)), ef -> E^((-Log[a] - b1*Log[b1] - Log[c] + b1*Log[c] + Log[k] - b1*Log[k] + b1*Log[p1] + Log[s] - b1*Log[s] - Log[Î»])/(c - k + b1*k))}}")
 
-; (Math/log 2.7) -> 0.99325...
-; (Math/pow 3 5) -> 243.0
 
-(def solution3 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] + b3*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] - b3*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] + b3*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] - b3*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x3 -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] + c*Log[b3] - k*Log[b3] + b1*k*Log[b3] + b2*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] - c*Log[p3] + k*Log[p3] - b1*k*Log[p3] - b2*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - b3*Log[b3] + b1*Log[p1] + b2*Log[p2] + b3*Log[p3] - b1*Log[Î»] - b2*Log[Î»] - b3*Log[Î»] + (-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k) - (b1*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b2*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b3*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k))/c)}}")
+(def s2 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»])/(c - k + b1*k + b2*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - Log[c] + b1*Log[c] + b2*Log[c] + Log[k] - b1*Log[k] - b2*Log[k] + b1*Log[p1] + b2*Log[p2] + Log[s] - b1*Log[s] - b2*Log[s] - Log[Î»])/(c - k + b1*k + b2*k))}}")
 
-(def s3-ef "E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - b3*Log[b3] + b1*Log[p1] + b2*Log[p2] + b3*Log[p3] - b1*Log[Î»] - b2*Log[Î»] - b3*Log[Î»] + (-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k) - (b1*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b2*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b3*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k))/c)")
 
-(def sol2 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»])/(c - k + b1*k + b2*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] - b2*k*Log[b2] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] + b2*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - Log[c] + b1*Log[c] + b2*Log[c] + Log[k] - b1*Log[k] - b2*Log[k] + b1*Log[p1] + b2*Log[p2] + Log[s] - b1*Log[s] - b2*Log[s] - Log[Î»])/(c - k + b1*k + b2*k))}}")
+(def s3 "{{z -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x1 -> E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] + b3*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] - b3*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x2 -> E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] + b3*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] - b3*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), x3 -> E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] + c*Log[b3] - k*Log[b3] + b1*k*Log[b3] + b2*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] - c*Log[p3] + k*Log[p3] - b1*k*Log[p3] - b2*k*Log[p3] + c*Log[s] - k*Log[Î»])/(c - k + b1*k + b2*k + b3*k)), ef -> E^((-Log[a] - b1*Log[b1] - b2*Log[b2] - b3*Log[b3] + b1*Log[p1] + b2*Log[p2] + b3*Log[p3] - b1*Log[Î»] - b2*Log[Î»] - b3*Log[Î»] + (-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»])/(c - k + b1*k + b2*k + b3*k) - (b1*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b2*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k) - (b3*(-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - c*Log[Î»] - b1*k*Log[Î»] - b2*k*Log[Î»] - b3*k*Log[Î»]))/(c - k + b1*k + b2*k + b3*k))/c)}}")
 
 
 (defn convert-log-fragment [fragment]
@@ -322,7 +319,7 @@
        (apply str)))
 
 
-(defn convert-z [s]
+(defn convert-num-and-denom [s]
   (letfn [(add-surrounding-string [[n d]]
             (str "(Math/pow Math/E (/ " n " " d "))"))]
     (-> s
@@ -334,82 +331,72 @@
         add-surrounding-string)))
 
 
+(defn convert-odd-ef [s]
+  (letfn [(unify-strings [[n d]]
+            (str "(/ " n " " d ")"))
+          (final-unify-string [[p-1 p-2]]
+            (str "E^(" p-1 " " p-2 "/c)"))
+          (convert-first-part [s]
+             (-> s
+                 (clojure.string/replace #"^-" "- ")
+                 convert-numerator))
+          (convert-second-part [s]
+             (let [denom-to-use (convert-denominator (clojure.string/replace s 
+                                                                             #"\/\((.*?)\) @@@" 
+                                                                             "$1"))]
+              (-> s
+                  (clojure.string/replace #"^\+ \(\-\(k\*Log\[a\]\)" "(+ (- (* k (Math/log a)))")
+                  (clojure.string/replace #" \- ([a-z]\d+)\*k\*Log\[([a-z0-9λ]+)\]" 
+                                          " (- (* $1 k (Math/log $2)))")
+                  (clojure.string/replace #" \+ ([a-z]\d+)\*k\*Log\[([a-z0-9λ]+)\]" 
+                                          " (* $1 k (Math/log $2))")
+                  (clojure.string/replace #" \- c\*Log\[([a-z0-9λ]+)\]"
+                                          " (- (* c (Math/log $1)))")
+                  (clojure.string/replace #" \+ c\*Log\[([a-z0-9λ]+)\]"
+                                          " (* c (Math/log $1))")                 
+                  ; TODO 10/10: replace denom-to-use
+                  (clojure.string/replace #"\/\(.*?\) @@@"
+                                            (str "(" denom-to-use ")"))
+
+                  )))]
+   (-> s
+       (clojure.string/replace #"^E\^\(\(" "")
+       (clojure.string/replace #"\)\/c\)$" "")
+       (clojure.string/replace #"Î»" "λ")
+       (clojure.string/replace #" ([\+\-]) \(" " @@@ $1 (")
+       (clojure.string/split #" @@@ " 2)
+       ((juxt (comp convert-first-part first)
+              (comp convert-second-part second)))
+       ;final-unify-string
+       )))
+
+
 (defn make-variables-and-equations-map [s]
   (->> (-> s
            (clojure.string/replace #"[\{\}]" "")
            (clojure.string/split #","))
        (map #(clojure.string/split % #" -> "))
        (map (juxt (comp keyword clojure.string/trim first) 
-                  (comp convert-z second)))
+                  (comp identity second)))
        (into {})))
 
 
-; 10/5/2018: Resume with (make-variables-and-equations-map solution1)
+(defn wolfram->clj [m]
+  "Takes the Wolfram API output as input, returns Clojure code as output"
+  (letfn [(apply-appropriate-function [[k v]]
+            (if (and (odd? (count m))
+                     (< 3 (count m))
+                     (= k :ef))
+              [k v] ; insert convert-odd-ef here
+              [k (convert-num-and-denom v)]))]
+    (->> m
+         (into [])
+         (map apply-appropriate-function)
+         (into {}))))
 
-(defn convert-ef-odd-top [equation]
-  (-> equation
-      (clojure.string/replace #"Î»" "λ")
-      (clojure.string/replace #"^\(?(b\d+)?\*?\(\-\(k\*Log\[a\]\)" "(*$1(- (k*Log[a])")
-      (clojure.string/split #" ")
-      ((partial partition 2))
-      ))
-
-; resume: 9/25/2018
-; (map convert-subfield (first (map (comp convert-ef-odd-top first) (last (wolfram->clj s3-ef)))))
-; next: put this ^^ code into a function
 
 (defn wolfram->clj [equation]
-  "Takes the Wolfram API output as input, returns Clojure code as output"
-  (letfn [(clean-wolfram-step-one [text]
-            (-> text
-                (clojure.string/replace #"\{\{" ", ")
-                (clojure.string/replace #"\}\}" "")
-                (clojure.string/split #", ")
-                rest))
-          (final-join [[f s]]
-            (if (= f "+")
-              s
-              (str "(- " s ")")))
-          (log->clj [fragment]
-            (-> fragment
-                (clojure.string/replace #"^\(" "")
-                (clojure.string/replace #"\)$" "")
-                (clojure.string/replace #"Log\[([a-z0-9λ]+)\]" "(Math/log $1)")
-                (clojure.string/replace #"\*" " ")
-                (clojure.string/replace #"^" "(* ")
-                (clojure.string/replace #"$" ")")))
-          (convert-numerator-to-clj [to-convert]
-            (-> to-convert
-                (clojure.string/replace #"Î»" "λ")
-                (clojure.string/replace #"^E\^\(\(" "")
-                (clojure.string/replace #"\)$" "")
-                (clojure.string/replace #"^-" "- ")
-                (clojure.string/split #" ")
-                ((partial partition 2))
-                ((partial map (juxt first (comp log->clj last))))
-                ((partial map final-join))
-                ((partial clojure.string/join " "))
-                ((partial str "(+ "))
-                (str ")")))
-          (convert-denominator-to-clj [to-convert]
-            (->> to-convert
-                 (re-seq #"b\d+")
-                 count
-                 inc
-                 (range 1)
-                 (map #(str "(* k b" % ")"))
-                 (clojure.string/join " ")
-                 (str "(+ c (- k) ")
-                 (conj [])
-                 (cons ")")
-                 reverse
-                 (apply str)))
-          (convert-n-and-d [[n d]]
-            (str "(Math/pow Math/E (/"
-                 (convert-numerator-to-clj n)
-                 " "
-                 (convert-denominator-to-clj d)
-                 "))"))
+  (letfn [
           (convert-numerator-to-clj-odd-ef [to-convert]
             (-> to-convert
 ;                (clojure.string/replace #"Î»" "λ")
@@ -422,12 +409,6 @@
 ;                ((partial str "(+ "))
 ;                (str ")")
                 ))
-          (convert-n-and-d-odd-ef [[n d]]
-            (str "(/ "
-                 (convert-numerator-to-clj-odd-ef n)
-                 " "
-                 (convert-denominator-to-clj d)
-                 ")"))
           (solve-odd-ef [to-convert]
             (-> to-convert
                 (clojure.string/replace #"^E\^\(\(" "")
@@ -437,10 +418,7 @@
                        (comp ; (partial map convert-n-and-d-odd-ef)
                              (partial map #(clojure.string/split % #"/"))
                              (partial map #(clojure.string/replace % #"^[\+\-] " ""))
-                             #(re-seq #"[\+\-] \(.*?\)\/\(.*?\)" %))))
-            )
-          )
-         ]
+                             #(re-seq #"[\+\-] \(.*?\)\/\(.*?\)" %))))))]
     (solve-odd-ef equation)
     #_(->> equation
          clean-wolfram-step-one
