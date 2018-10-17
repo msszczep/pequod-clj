@@ -99,4 +99,13 @@ October 5, 2018
 Okay.  I'm giving myself a deadline of getting this app done in working form in 3 months.  I'm tired of
 letting this linger like an albatross over my head.  And to make _sure_ this gets done, I'm locking
 myself into a presentation to give in January -- I _have_ to get this done, so that I have the presentation
-done. 
+done.
+
+October 17, 2018
+I came upon a great brainstorm this past weekend: Rewrite the Clojure app as a _Clojurescript_ app.  I could
+use Figwheel, I could get instant feedback, I could store all the data as one big _atom_ (probably a map).
+I resolved to do that, and on Monday I finally did: I created a new figwheel project (with tests!) and 
+got it working!  For the past three days, I've been coding away on it happily, making excellent progress, and
+even better leveraging the _Clojure code I already wrote_ into this Clojurescript app.  Better still, once
+I'm done (to some extent) I can export it to an HTML file and post it on my website to share with Robin
+and Michael.  Hot damn!  Life is good (at least as far as this project is concerned). 
