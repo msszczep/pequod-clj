@@ -1,0 +1,32 @@
+Sorry this is a non-obvious mapping. I will do my best to recall from memory right now and hopefully you can fill in any remaining gaps.
+
+z -> output
+ef -> effort
+x1...xn -> input-quantities (this is a concatenated list of intermediate-good-quantities, labor-quantities, and nature-quantities, since they are all equivalent from the solver's perspective)
+b1...bn -> input-exponents (this is also a concatenated list, in the same order for the same reason)
+a -> A
+p1...pn -> this is a lookup to the current price list for the appropriate intermediate-inputs, labor-inputs, and nature-inputs, in the same order as the xn's and the bn's)
+lambda -> this is the price of the output good
+S -> S
+
+I hope this helps, let me know if you have any further questions! 
+
+{:effort 0.5, :cq 0.25, :ce 1, :A 0.25, :labor-exponents (0.3932499560877498), :industry 0, :output 0, :du 7, :c 0.05, :product 4, :labor-quantities [0], :production-inputs [(1 2 3 4) (1) (1)], :input-exponents (0.08390705611099702 0.08153338928685619 0.08760246604003222 0.08209008283156705), :xe 0.05, :S 1, :nature-exponents (0.29209593958589625)}
+
+Lambda: p1 
+a: A
+s: S
+c: c
+k: du
+p1..pn: production-inputs
+b1..bn: input-exponents, labor-exponents, nature-exponents
+z: output
+x1..xn: resulting output 
+
+The worker council is assigned a specific product (e.g. final-good 1 or intermediate-good 2). The current price of whatever the output product for a given worker council is found in the price list.
+
+Lambda is the conventional symbol for the Lagrange multiplier when using this method of optimization. When you work through the example I'm pretty sure it turns out to be the price of the output good, however I would have to check my notes to be certain of this--if it looks wrong or isn't working let me know and I can take a closer look sometime this weekend.
+
+I believe that when we import the solutions from Mathematica to Netlogo one of the steps is replacing lambda with p (p being current price of product). I don't recall if this happens in the mathematica stage, the python script, or in netlogo (probably one of the first two).
+
+Hope this helps
