@@ -109,3 +109,76 @@ got it working!  For the past three days, I've been coding away on it happily, m
 even better leveraging the _Clojure code I already wrote_ into this Clojurescript app.  Better still, once
 I'm done (to some extent) I can export it to an HTML file and post it on my website to share with Robin
 and Michael.  Hot damn!  Life is good (at least as far as this project is concerned). 
+
+March 24, 2019
+On or around February 20, 2019, I read something somewhere online.  I think it was Daily Kos, but I 
+couldn't find the quote when I tried to search for it.  The quote I read said words to the effect: "We
+have 12 years to get in shape before global warming becomes unstoppable.  Everyone has to do something
+each day to address this.  What are you doing today about it?"
+
+This really struck a chord with me.  I like to think I'm living kind of a sparse life; I've been vegan
+for a quarter-century.  I don't own a car.  I shut the lights off when I'm not using them.  Even so,
+I feel like I need to "up" my game.  So, I decided to focus on pequod.  It's paying off.  In the month
+or so since reading that, I've nearly tripled the number of commits of code.  
+
+Number of commits in the first 4 months of pequod-cljs before February 20, 2019: 16
+Number of commits in the month-plus of pequod-cljs since February 20, 2019, so far: 44
+
+Here's the list of commits for good measure.
+
+a00c8b7 - (HEAD -> master, origin/master) Got last of tests (first round) written and green. (9 hours ago)
+ea24803 - Yet more tests! (10 hours ago)
+d40a985 - More tests. (13 hours ago)
+bd5f96a - First working tests. (13 hours ago)
+88700b5 - Got infrastructure working for automated doo tests. (15 hours ago)
+43a4fef - Adding package-lock.json for Doo tests. (16 hours ago)
+0c9c343 - Improve flexibility of presentation, use. (33 hours ago)
+3e22777 - Got part 5 working as intended. (3 days ago)
+fe0bf73 - Coded up Part 5; now to get it to work as intended! (3 days ago)
+1b319e6 - Beginning five-part stitch: button for threshold, et al. (4 days ago)
+fe0048f - WIP: check-surpluses (6 days ago)
+abd6617 - Part 5: Got lorenz-and-gini tuple code fixed! (6 days ago)
+0a3b1db - Got other-price-change coded and confirmed! (7 days ago)
+35d07ad - Got demand-list fixed! (7 days ago)
+ba8a843 - Got demand list, I think. (11 days ago)
+5f04160 - Got get-supply-list function drafted. (2 weeks ago)
+fb90704 - Cleanup, and starting work on price-change (2 weeks ago)
+d34fa1b - confirmed nature and labor prices and surpluses match! (2 weeks ago)
+39e36d1 - Got intermediate surpluses (and prices?) fixed! (2 weeks ago)
+170fefe - Assorted refinements to update-surpluses-prices (2 weeks ago)
+2147bfc - Fixed final-prices in update-prices-surpluses (2 weeks ago)
+475c9f6 - Fixed surpluses in update-surpluses-prices (2 weeks ago)
+c48774e - Fixed bug with :a/:s consistency; got wcs/ccs working. (2 weeks ago)
+1f18815 - Got second button, ex001 fed in! (2 weeks ago)
+ff2df99 - Got data exported to a digestible format. (3 weeks ago)
+ed8ce8a - More data wrangling: Got string conversion to Clojure working. (3 weeks ago)
+e97e63d - Cheatsheet: read-string (3 weeks ago)
+c84756b - Data munging, part one. (3 weeks ago)
+ac3a332 - Process to load data from CSV from Netlogo. (3 weeks ago)
+f7a0b4e - Updating deltas' calculation. (3 weeks ago)
+51b0fe1 - Don't forget the notes! (3 weeks ago)
+4dee53f - WIP Got update-surpluses-prices working, kind of. (3 weeks ago)
+0d38253 - WIP got update-surpluses-prices in! (3 weeks ago)
+2838a30 - Consolidate update-sap code. (3 weeks ago)
+a7d07da - Adding notes for future tests, reference. (3 weeks ago)
+3b2bd42 - Correcting consume function to deliver correct output. (3 weeks ago)
+87327f9 - Got solution-5 and solution-6 fixed and working! (3 weeks ago)
+aa8804e - Solution-5 work: Fixed output, fixing effort. (4 weeks ago)
+f9b29a5 - Fixed bug with assign-new-proposal: confirmed solution-4 works (4 weeks ago)
+6dfb10d - Get rid of #NaN errors by feeding in right values. (4 weeks ago)
+52486ea - Got effort in solution-3 fixed! (4 weeks ago)
+23fd8b7 - Fixing ps (prices) and general debugging. (4 weeks ago)
+eaf4317 - Adding all subroutines (ripe for refactoring) (4 weeks ago)
+
+I haven't kept up with my diary, but in effect this commit list _is_ my diary of sorts.  
+Let my work be my diary.  Get this shit done; we've got a world to transform.
+
+To summarize: I've got the backend infrastructure for Pequod entirely rewritten in Clojurescript.
+Just yesterday, in a bout of furious work, I built a testing infrastructure using Doo for
+pequod-cljs.  There's an ulterior motive for doing so, besides that I need to be better at TDD.
+The iteration logic doesn't work.  I thought that, if I got it all built and tested for a single
+iteration, the remaining iterations would fall into place.  They don't; the numbers are askew
+after a single iteration.  I need to figure this out, but before I do so I need to make sure
+that the code work I've done so far doesn't go off the rails.  It's now gotten to a point
+where there's too much to keep track of, hence the need to bring in automated tests.  Here's hoping
+I can crack this problem.
