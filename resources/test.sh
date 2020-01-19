@@ -1,0 +1,15 @@
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=1' > api01.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=2' > api02.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=3' > api03.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=4' > api04.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=5' > api05.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=6' > api06.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=7' > api07.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=8' > api08.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=9' > api09.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=10' > api10.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=11' > api11.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=12' > api12.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=13' > api13.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=14' > api14.txt
+time curl 'https://www.wolframcloud.com/objects/0f665c3f-4fe9-4ddb-8713-6f9947270a12?n=15' > api15.txt

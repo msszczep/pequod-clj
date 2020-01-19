@@ -1,0 +1,12 @@
+
+s3x1[a_, s_, c_, k_, p1_, p2_, p3_, b1_, b2_, b3_, λ_] := E^((-(k*Log[a]) + c*Log[b1] - k*Log[b1] + b2*k*Log[b1] + b3*k*Log[b1] - b2*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] - c*Log[p1] + k*Log[p1] - b2*k*Log[p1] - b3*k*Log[p1] + b2*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[λ])/(c - k + b1*k + b2*k + b3*k))
+
+s3x2[a_, s_, c_, k_, p1_, p2_, p3_, b1_, b2_, b3_, λ_] := E^((-(k*Log[a]) - b1*k*Log[b1] + c*Log[b2] - k*Log[b2] + b1*k*Log[b2] + b3*k*Log[b2] - b3*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] - c*Log[p2] + k*Log[p2] - b1*k*Log[p2] - b3*k*Log[p2] + b3*k*Log[p3] + c*Log[s] - k*Log[λ])/(c - k + b1*k + b2*k + b3*k))
+
+s3x3[a_, s_, c_, k_, p1_, p2_, p3_, b1_, b2_, b3_, λ_] E^((-(k*Log[a]) - b1*k*Log[b1] - b2*k*Log[b2] + c*Log[b3] - k*Log[b3] + b1*k*Log[b3] + b2*k*Log[b3] - c*Log[c] + c*Log[k] + b1*k*Log[p1] + b2*k*Log[p2] - c*Log[p3] + k*Log[p3] - b1*k*Log[p3] - b2*k*Log[p3] + c*Log[s] - k*Log[λ])/(c - k + b1*k + b2*k + b3*k))
+
+s3x1[10, 1, 0.05, 2, 3, 1, 1, 0.3890958281110604, 0.21511595104798242, 0.2266003079961335, 3]
+
+s3x2[10, 1, 0.05, 2, 3, 1, 1, 0.3890958281110604, 0.21511595104798242, 0.2266003079961335, 3]
+
+s3x3[10, 1, 0.05, 2, 3, 1, 1, 0.3890958281110604, 0.21511595104798242, 0.2266003079961335, 3]

@@ -1,0 +1,31 @@
+Hi, Robin.
+
+Per our discussion this week, I've got code working to convert the solution space.  The recipe I've derived is as follows:
+
+1.  Figure out the solution to solve the effort "ef"; the list of inputs "x1", "x2", through to "xn"; and the total productivity factor "z".  I'm attaching a sample Mathematica file, "sols6.nb", which describes the solution space for six inputs.  
+
+2.  Generalize this formula for lists of all inputs "n", with a web program (an "API") written in Mathematica.  The URL that I have for this API is here:
+
+https://www.wolframcloud.com/objects/6418ed29-be1b-4552-b600-ca5f13689f43?n=3
+
+You may not be able to access this URL.  If not, you can generate your own using the API with the code in the attached Mathematica file, "solutionsApi.nb".
+
+3.  The output of the API is in Mathematica; I now have working code to convert that Mathematica output into Clojure.  The code is here (and has a number of helper functions):
+
+https://github.com/msszczep/pequod-clj/blob/master/src/pequod_clj/core.clj#L389-L400
+
+There an additional file that I have in my archives, lagrangian_notes.pdf, which Michael shared with me.  You may find this of use in determining a simpler suite of formulas for Pequod and Pequod-in-Clojure.
+
+I'll run tests on the solution space for n=12 and share the results (probably via the web, since they can get quite long).
+
+Once that's done, my plan is to assess how much code remains to get converted from NetLogo to Clojure, and then devise a plan to finish a working version of this app in the next three months.  I'll share that too when I have that, expected in the next few days.
+
+Let me know if you have any questions.
+
+Thanks.
+-- Mitchell
+
+Files to attach:
+* sols6.nb
+* solutionsApi.nb
+* lagrangian_notes.pdf
